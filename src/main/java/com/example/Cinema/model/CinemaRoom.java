@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,7 +24,11 @@ public class CinemaRoom {
     private Integer roomNumber;
 
     private Integer capacity;
-    private Seat[][] seats;
+
+    @OneToMany(mappedBy = "cinemaRoom"
+            , cascade = CascadeType.ALL
+            , orphanRemoval = true)
+    private List<Seat> seats;
 
 
 }

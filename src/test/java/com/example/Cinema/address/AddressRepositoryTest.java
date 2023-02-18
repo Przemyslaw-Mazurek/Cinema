@@ -1,5 +1,6 @@
 package com.example.Cinema.address;
 
+import com.example.Cinema.enums.PaymentStatus;
 import com.example.Cinema.exceptions.NoSuchElementFoundException;
 import com.example.Cinema.model.Address;
 import com.example.Cinema.model.User;
@@ -22,11 +23,6 @@ public class AddressRepositoryTest {
     private AddressRepository addressRepositoryTest;
 
 
-    @AfterEach
-    void tearDown() {
-        addressRepositoryTest.deleteAll();
-    }
-
     @BeforeEach
     public void clearDB() {
         addressRepositoryTest.deleteAll();
@@ -37,10 +33,10 @@ public class AddressRepositoryTest {
         //given
         String exampleStreetNameToFind = "Cybernetyki";
 
-        Address address1 = new Address(1L, "Cybernetyki", "17C", 9, "12-127", "Poland", null);
-        Address address2 = new Address(2L, "Uliczna", "21", 3, "44-127", "Poland", null);
-        Address address3 = new Address(3L, "Cybernetyki", "9", 4, "02-677", "Poland", null);
-        Address address4 = new Address(4L, "Cybernetyki", "11", 1, "03-677", "Poland", null);
+        Address address1 = new Address(1L, "Cybernetyki", "17C", 9, "12-127", "Poland","Warsaw" );
+        Address address2 = new Address(2L, "Uliczna", "21", 3, "44-127", "Poland","Warsaw" );
+        Address address3 = new Address(3L, "Cybernetyki", "9", 4, "02-677", "Poland", "Warsaw");
+        Address address4 = new Address(4L, "Cybernetyki", "11", 1, "03-677", "Poland","Warsaw");
 
         addressRepositoryTest.save(address1);
         addressRepositoryTest.save(address2);
@@ -57,7 +53,7 @@ public class AddressRepositoryTest {
     @Test
     public void verifyRepositorySaveAddressToDB() {
         //given
-        Address address = new Address(1L, "Cybernetyki", "17C", 9, "12-127", "Poland", null);
+        Address address = new Address(1L, "Cybernetyki", "17C", 9, "12-127", "Poland","Warsaw");
         addressRepositoryTest.save(address);
 
         //when
@@ -68,12 +64,6 @@ public class AddressRepositoryTest {
     }
 
 
-    @Test
-    public void verifyItReturnsAddressByUser(){
-        //given
-        User user = new User();
-
-    }
 
 
 }

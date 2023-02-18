@@ -47,4 +47,9 @@ public class AddressController {
         Address updatedAddress = addressService.updateAddress(id, address);
         return ResponseEntity.ok(updatedAddress);
     }
+
+    @PostMapping
+    public ResponseEntity<Address> saveAddress(@Valid @RequestBody Address address){
+        return ResponseEntity.ok(addressService.saveAddress(address));
+    }
 }

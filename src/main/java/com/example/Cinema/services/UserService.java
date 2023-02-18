@@ -1,5 +1,6 @@
 package com.example.Cinema.services;
 
+import com.example.Cinema.exceptions.EmailAlreadyExistsException;
 import com.example.Cinema.exceptions.NoSuchElementFoundException;
 import com.example.Cinema.model.User;
 import com.example.Cinema.repositories.UserRepository;
@@ -21,9 +22,18 @@ public class UserService {
     private final String userByNameAndSurnameNotFound = "Users with name and surname {0} {1} not found.";
     private final String userByEmailNotFound = "User with email {0} not found.";
 
+    private final String emailExists = "User with email {0} already exists.";
+
 
     public User addUser(User user) {
-        return userRepository.save(user);
+
+        User userByEmail = userRepository.findByEmail(user.getEmail());
+
+        if (userByEmail != null) {
+            throw new EmailAlreadyExistsException(MessageFormat.format(emailExists, userByEmail.getEmail()));
+        } else {
+            return userRepository.save(user);
+        }
     }
 
     public List<User> getAllUsers() {
@@ -37,32 +47,38 @@ public class UserService {
         return user;
     }
 
-    public List <User> getUsersByFirstNameAndLastName(String firstName, String lastName){
-       List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
-       if (users.isEmpty()){
-           throw new NoSuchElementFoundException(MessageFormat.format(userByNameAndSurnameNotFound, firstName, lastName));
-       }
+    public List<User> findByFirstNameAndLastNameEqualsIgnoreCase(String firstName, String lastName) {
+        List<User> users = userRepository.findByFirstNameAndLastNameEqualsIgnoreCase(firstName, lastName);
+        if (users.isEmpty()) {
+            throw new NoSuchElementFoundException(MessageFormat.format(userByNameAndSurnameNotFound, firstName, lastName));
+        }
 
-       return users;
+        return users;
     }
 
-    public User getUserByEmail(String email){
+    public User getUserByEmail(String email) {
         User user = userRepository.findByEmail(email);
 
-        if (user==null){
+        if (user == null) {
             throw new NoSuchElementFoundException(MessageFormat.format(userByEmailNotFound, email));
         }
 
         return user;
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, User newUser) {
         User userFromDB = userRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementFoundException(MessageFormat.format(userNotFound, id)));
 
-        userRepository.save(user);
+        userFromDB.setFirstName(newUser.getFirstName());
+        userFromDB.setLastName(newUser.getLastName());
+        userFromDB.setAddress(newUser.getAddress());
+        userFromDB.setPhoneNumber(newUser.getPhoneNumber());
+        userFromDB.setEmail(newUser.getEmail());
+        userFromDB.setPayment(newUser.getPayment());
+        userFromDB.setDisabled(newUser.getDisabled());
 
-        return user;
+        return userRepository.save(userFromDB);
     }
 
     public void removeUser(Long id) {

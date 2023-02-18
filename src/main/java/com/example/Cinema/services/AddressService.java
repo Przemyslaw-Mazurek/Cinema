@@ -35,6 +35,10 @@ public class AddressService {
         return addresses;
     }
 
+    public Address saveAddress(Address address){
+       return addressRepository.save(address);
+    }
+
     public Address getAddressById(Long id) {
         Address address = addressRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementFoundException(MessageFormat.format(addressNotFound, id)));
@@ -50,7 +54,7 @@ public class AddressService {
         newAddress.setApartmentNumber(address.getApartmentNumber());
         newAddress.setPostCode(address.getPostCode());
         newAddress.setCountry(address.getCountry());
-        newAddress.setUser(address.getUser());
+        newAddress.setCity(address.getCity());
 
         return addressRepository.save(newAddress);
     }

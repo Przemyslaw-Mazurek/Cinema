@@ -7,7 +7,6 @@ import javax.validation.constraints.NotBlank;
 
 
 @Getter
-@Data
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +19,7 @@ public class Address {
     private Long id;
 
     @NotBlank
+    @Column(name = "street_name")
     private String streetName;
 
     @NotBlank
@@ -34,10 +34,9 @@ public class Address {
     private String postCode;
 
     @NotBlank
+    private String city;
+
+    @NotBlank
     private String country;
-
-    @OneToOne(mappedBy = "address")
-    private User user;
-
 
 }

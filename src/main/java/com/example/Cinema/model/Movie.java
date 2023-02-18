@@ -19,8 +19,6 @@ import java.util.List;
 @Table(name = "movies")
 public class Movie {
 
-    //todo klasa agregująca konkretny film, timeslot i salę, z której by się wybierało dostępne miejsca
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -43,7 +41,7 @@ public class Movie {
     @Column(name = "is_premiere")
     private boolean isPremiere;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(name = "movie_category")
     private MovieCategory movieCategory;
 

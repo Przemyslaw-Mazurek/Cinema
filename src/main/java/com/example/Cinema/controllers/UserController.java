@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/findByName")
     public ResponseEntity<List<User>> getUsersByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName){
-        return ResponseEntity.ok(userService.getUsersByFirstNameAndLastName(firstName, lastName));
+        return ResponseEntity.ok(userService.findByFirstNameAndLastNameEqualsIgnoreCase(firstName, lastName));
     }
 
     @GetMapping("findByEmail")
