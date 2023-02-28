@@ -19,6 +19,16 @@ import java.util.List;
 @Table(name = "movies")
 public class Movie {
 
+    public Movie(String title, int duration, String description, int minimumAge, double rating, boolean isPremiere, MovieCategory movieCategory) {
+        this.title = title;
+        this.duration = duration;
+        this.description = description;
+        this.minimumAge = minimumAge;
+        this.rating = rating;
+        this.isPremiere = isPremiere;
+        this.movieCategory = movieCategory;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

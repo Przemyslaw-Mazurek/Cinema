@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,10 +26,7 @@ public class TimeSlot {
     private Long id;
 
     @Column(name = "start_movie_time")
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalDateTime startMovieTime;
-
-    //todo is this needed?
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "timeSlots")
-    private List<Showing> showings = new ArrayList<>(0);
 
 }

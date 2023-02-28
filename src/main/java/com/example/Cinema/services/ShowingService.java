@@ -41,7 +41,6 @@ public class ShowingService {
                 .orElseThrow(() -> new NoSuchElementFoundException(MessageFormat.format(showingNotFound, id)));
 
         showingFromDB.setMovie(showing.getMovie());
-        showingFromDB.setTicket(showing.getTicket());
         showingFromDB.setTimeSlots(showing.getTimeSlots());
         showingFromDB.setMovie(showing.getMovie());
         showingFromDB.setRepertoire(showing.getRepertoire());

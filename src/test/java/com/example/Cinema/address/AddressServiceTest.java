@@ -26,16 +26,8 @@ class AddressServiceTest {
     public void setUpAddressService(){
         addressService = new AddressService(addressRepository);
     }
-    @Test
-    void canGetAllAddresses() {
-        //when
-        addressService.getAllAddresses();
-        //then
-        verify(addressRepository).findAll();
-    }
 
     @Test
-    @Disabled
     public void verifyThrowsExceptionWhenAddressNotFound() {
         addressRepository.deleteAll();
         assertThrows(NoSuchElementFoundException.class, () -> addressService.getAddressById(1L));

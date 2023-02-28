@@ -17,38 +17,12 @@ public class CinemaRoomService {
 
     private final CinemaRoomRepository cinemaRoomRepository;
 
-
     private final String cinemaRoomNotFound = "Cinema room with id = {0} not found.";
 
     public CinemaRoomService(CinemaRoomRepository cinemaRoomRepository) {
         this.cinemaRoomRepository = cinemaRoomRepository;
     }
 
-    public void addCinemaRoom(CinemaRoom cinemaRoom, List<Seat> seats) {
-        cinemaRoom.setSeats(seats);
-        cinemaRoomRepository.save(cinemaRoom);
-    }
-
-    @PostConstruct
-    public void initializeCinemaRoomBySeats() {
-        CinemaRoom cinemaRoom = new CinemaRoom();
-        cinemaRoom.setRoomNumber(1);
-        cinemaRoom.setCapacity(200);
-
-        List<Seat> seats = new ArrayList<>();
-
-        for (int i = 1; i <= 200; i++) {
-            if (i <= 170) {
-                seats.add(new Seat(i, SeatType.NORMAL, cinemaRoom));
-            } else if (i < 190) {
-                seats.add(new Seat(i, SeatType.VIP, cinemaRoom));
-            } else {
-                seats.add(new Seat(i, SeatType.DISABLED, cinemaRoom));
-            }
-        }
-
-        addCinemaRoom(cinemaRoom, seats);
-    }
 
     public List<CinemaRoom> getAllCinemaRooms() {
         return cinemaRoomRepository.findAll();

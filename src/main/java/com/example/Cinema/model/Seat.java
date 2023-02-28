@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "seats")
 @NoArgsConstructor
 public class Seat {
     @Id
@@ -18,6 +19,12 @@ public class Seat {
 
     private Integer seatNumber;
 
+    public Seat(Integer seatNumber, SeatType seatType, CinemaRoom cinemaRoom) {
+        this.seatNumber = seatNumber;
+        this.seatType = seatType;
+        this.cinemaRoom = cinemaRoom;
+    }
+
     @Enumerated(EnumType.STRING)
     private SeatType seatType;
 
@@ -25,13 +32,8 @@ public class Seat {
     @JoinColumn(name = "ticket_id")
     private Ticket ticket;
 
-    @ManyToOne
-    @JoinColumn(name = "cinemaRoomId" )
+    @ManyToOne()
+    @JoinColumn(name = "cinema_room_id" )
     private CinemaRoom cinemaRoom;
 
-    public Seat(Integer seatNumber, SeatType seatType, CinemaRoom cinemaRoom) {
-        this.seatNumber = seatNumber;
-        this.seatType = seatType;
-        this.cinemaRoom = cinemaRoom;
-    }
 }

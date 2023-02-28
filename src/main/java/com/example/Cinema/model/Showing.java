@@ -36,12 +36,9 @@ public class Showing { // Séance
             inverseJoinColumns = @JoinColumn(name = "time_slot_id"))
     private List<TimeSlot> timeSlots;
 
-//todo is this needed?
+
     @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
     @JoinColumn(name = "repertoire_id")
     private Repertoire repertoire;
-
-    @OneToOne(mappedBy = "showing")
-    private Ticket ticket;
 
 }

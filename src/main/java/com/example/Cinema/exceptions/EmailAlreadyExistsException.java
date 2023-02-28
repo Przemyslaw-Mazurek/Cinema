@@ -5,13 +5,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class EmailAlreadyExistsException extends ResponseStatusException {
 
-    private String message;
 
     public EmailAlreadyExistsException(String message) {
-        super(HttpStatus.BAD_REQUEST, message);
+        super(HttpStatus.CONFLICT, message);
     }
 
     public String getMessage() {
-        return message;
+        return super.getReason();
     }
 }

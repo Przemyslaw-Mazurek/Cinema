@@ -5,8 +5,10 @@ import com.example.Cinema.enums.MovieCategory;
 import com.example.Cinema.exceptions.NoSuchElementFoundException;
 import com.example.Cinema.model.Movie;
 import com.example.Cinema.repositories.MovieRepository;
+import lombok.Getter;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -25,8 +27,8 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public List<Movie> getAllMoviesByCategory(String category) {
+        return movieRepository.findByMovieCategory(category);
     }
 
     public Movie getMovie(Long id) {
@@ -51,12 +53,12 @@ public class MovieService {
         return movieFromDB;
     }
 
-    public Page<Movie> getMoviesWithPage(MovieCategory movieCategory, MoviePaging moviePaging){
+
+    public Page<Movie> getMoviesWithPage() {
+        MoviePaging moviePaging = new MoviePaging(5, 0, Sort.Direction.ASC, "id");
         Sort sort = Sort.by(moviePaging.getSortDirection(), moviePaging.getSortBy());
-        Pageable pageable = PageRequest.of(moviePaging.getPageSize(), moviePaging.getPageSize(), sort);
-        List<Movie> movieByMovieCategory = movieRepository.findMovieByMovieCategory(movieCategory, pageable);
-        Page<Movie> moviesPage = new PageImpl<>(movieByMovieCategory);
-        return moviesPage;
+        Pageable pageable = PageRequest.of(moviePaging.getPageNumber(), moviePaging.getPageSize(), sort);
+        return movieRepository.findAll(pageable);
     }
 
     //TODO dodać metodę pobierającą listę movies po category

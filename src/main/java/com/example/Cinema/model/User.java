@@ -1,5 +1,6 @@
 package com.example.Cinema.model;
 
+import com.example.Cinema.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,8 +32,14 @@ public class User {
     private String lastName;
 
     @Column(unique = true)
-    @Email(message = "Email is already in database!")
+    @Email
     private String email;
+
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Role role;
 
     @Column(name = "phone_number")
     private Integer phoneNumber;

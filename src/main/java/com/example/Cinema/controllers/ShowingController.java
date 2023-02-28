@@ -30,8 +30,8 @@ public class ShowingController {
     }
 
     @PostMapping
-    public ResponseEntity<Showing> addShowing(@Valid @RequestBody Showing movie) {
-        return ResponseEntity.ok(showingService.addShowing(movie));
+    public ResponseEntity<Showing> addShowing(@Valid @RequestBody Showing showing) {
+        return ResponseEntity.ok(showingService.addShowing(showing));
     }
 
     @DeleteMapping

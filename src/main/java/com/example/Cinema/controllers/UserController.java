@@ -1,5 +1,6 @@
 package com.example.Cinema.controllers;
 
+import com.example.Cinema.enums.Role;
 import com.example.Cinema.exceptions.NoSuchElementFoundException;
 import com.example.Cinema.model.User;
 import com.example.Cinema.model.User;
@@ -23,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Role role) {
+        return ResponseEntity.ok(userService.getAllUsers(role));
     }
 
     @GetMapping("{id}")
@@ -51,11 +52,6 @@ public class UserController {
     @GetMapping("/findByName")
     public ResponseEntity<List<User>> getUsersByFirstNameAndLastName(@RequestParam String firstName, @RequestParam String lastName){
         return ResponseEntity.ok(userService.findByFirstNameAndLastNameEqualsIgnoreCase(firstName, lastName));
-    }
-
-    @GetMapping("findByEmail")
-    public ResponseEntity<User> getUserByEmail(@RequestParam String email){
-        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
 }

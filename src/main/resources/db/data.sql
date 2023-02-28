@@ -31,6 +31,17 @@ VALUES ('Monty Python and the Holy Grail', 120, 'Monty Python and the Holy Grail
 
 
 
+INSERT INTO CINEMA_ROOMS (cinema_room_nr, capacity, is_full, participants)
+VALUES (1, 400, false, 250);
+
+INSERT INTO CINEMA_ROOMS (cinema_room_nr, capacity, is_full, participants)
+VALUES (2, 350, false, 250);
+
+INSERT INTO CINEMA_ROOMS (cinema_room_nr, capacity, is_full, participants)
+VALUES (3, 220, false, 200);
+
+
+
 INSERT INTO ADDRESSES (street_name, block_number, apartment_number, post_code, city, country)
 VALUES ('Polna', '7C', 12, '02-798', 'Warsaw', 'Poland');
 
@@ -48,20 +59,20 @@ VALUES ('Polna', '7C', 11, '03-228', 'Krakow', 'Poland');
 
 
 
-INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id)
-VALUES ('Jola', 'Byk', 'jola.byk@gmail.com', 111111111, false, 5, null);
+INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id, role, password)
+VALUES ('Jola', 'Byk', 'jola.byk@gmail.com', 111111111, false, 5, null, 'ADMIN', 'password1');
 
-INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id)
-VALUES ('Ania', 'Zupa', 'ania.zupa@gmail.com', 222222222, false, 3, null);
+INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id, role, password)
+VALUES ('Ania', 'Zupa', 'ania.zupa@gmail.com', 222222222, false, 3, null, 'USER',  'password2');
 
-INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id)
-VALUES ('Ola', 'Fiks', 'ola.fiks@gmail.com', 333333333, false, 4, null);
+INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id, role, password)
+VALUES ('Ola', 'Fiks', 'ola.fiks@gmail.com', 333333333, false, 4, null, 'USER', 'password3');
 
-INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id)
-VALUES ('Kasia', 'Nowak', 'kasia.nowak@gmail.com', 444444444, false, 1, null);
+INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id, role, password)
+VALUES ('Kasia', 'Nowak', 'kasia.nowak@gmail.com', 444444444, false, 1, null, 'USER', 'password4');
 
-INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id)
-VALUES ('Magda', 'Ryk', 'magda.ryk@gmail.com', 555555555, false, 2, null);
+INSERT INTO USERS (first_name, last_name, email, phone_number, disabled, address_id, payment_id, role, password)
+VALUES ('Magda', 'Ryk', 'magda.ryk@gmail.com', 555555555, false, 2, null, 'VIP', 'password5');
 
 
 

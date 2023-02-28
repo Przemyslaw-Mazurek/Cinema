@@ -1,15 +1,24 @@
 package com.example.Cinema.services;
 
+import com.example.Cinema.enums.Role;
 import com.example.Cinema.exceptions.EmailAlreadyExistsException;
 import com.example.Cinema.exceptions.NoSuchElementFoundException;
 import com.example.Cinema.model.User;
 import com.example.Cinema.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -20,23 +29,24 @@ public class UserService {
 
     private final String userNotFound = "User with id = {0} not found.";
     private final String userByNameAndSurnameNotFound = "Users with name and surname {0} {1} not found.";
-    private final String userByEmailNotFound = "User with email {0} not found.";
-
     private final String emailExists = "User with email {0} already exists.";
 
 
     public User addUser(User user) {
 
-        User userByEmail = userRepository.findByEmail(user.getEmail());
+        boolean studentExistsByEmail = userRepository.existsByEmail(user.getEmail());
 
-        if (userByEmail != null) {
-            throw new EmailAlreadyExistsException(MessageFormat.format(emailExists, userByEmail.getEmail()));
+        if (studentExistsByEmail) {
+            throw new EmailAlreadyExistsException(MessageFormat.format(emailExists, user.getEmail()));
         } else {
             return userRepository.save(user);
         }
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(Role role) {
+        if (role != null) {
+            return userRepository.findAllByRole(role);
+        }
         return userRepository.findAll();
     }
 
@@ -56,15 +66,6 @@ public class UserService {
         return users;
     }
 
-    public User getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new NoSuchElementFoundException(MessageFormat.format(userByEmailNotFound, email));
-        }
-
-        return user;
-    }
 
     public User updateUser(Long id, User newUser) {
         User userFromDB = userRepository.findById(id)
@@ -74,6 +75,11 @@ public class UserService {
         userFromDB.setLastName(newUser.getLastName());
         userFromDB.setAddress(newUser.getAddress());
         userFromDB.setPhoneNumber(newUser.getPhoneNumber());
+
+        if (newUser.getEmail().equals(userFromDB.getEmail())) {
+            throw new EmailAlreadyExistsException(MessageFormat.format(emailExists, userFromDB.getEmail()));
+        }
+
         userFromDB.setEmail(newUser.getEmail());
         userFromDB.setPayment(newUser.getPayment());
         userFromDB.setDisabled(newUser.getDisabled());
@@ -86,4 +92,6 @@ public class UserService {
                 .orElseThrow(() -> new NoSuchElementFoundException(MessageFormat.format(userNotFound, id)));
         userRepository.deleteById(id);
     }
+
+
 }
